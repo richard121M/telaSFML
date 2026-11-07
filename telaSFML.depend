@@ -2067,9 +2067,10 @@
 	<string>
 	<vector>
 
-1794025022 source:c:\users\usuario\desktop\telasfml\telasfml\main.cpp
+1794029574 source:c:\users\usuario\desktop\telasfml\telasfml\main.cpp
 	<SFML/Graphics.hpp>
 	<iostream>
+	<cmath>
 
 1793977196 c:\users\usuario\desktop\telasfml\telasfml\dependencias\windows32\sfml32win242\include\sfml\graphics.hpp
 	<SFML/Window.hpp>
