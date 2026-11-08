@@ -23,22 +23,21 @@
 					<Add directory="dependencias/windows32/sfml32win242/lib" />
 				</Linker>
 			</Target>
-			<Target title="lin_debug">
+			<Target title="linuxSFML261">
 				<Option output="bin/Lin_Debug/telaSFML" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Lin_Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
-					<Add directory="dependencias/linux/SFML-2.4.2/include" />
+					<Add directory="dependencias/linux/SFML-2.6.1/include" />
 				</Compiler>
 				<Linker>
-					<Add option="-Wl,-rpath,&apos;$ORIGIN/dependencias/linux/SFML-2.4.2/lib&apos;" />
+					<Add option="-Wl,-rpath,&apos;$ORIGIN/../../dependencias/linux/SFML-2.6.1/lib&apos;" />
 					<Add library="sfml-graphics" />
 					<Add library="sfml-window" />
 					<Add library="sfml-system" />
-					<Add library="stb" />
-					<Add directory="dependencias/linux/SFML-2.4.2/lib" />
+					<Add directory="dependencias/linux/SFML-2.6.1/lib" />
 				</Linker>
 			</Target>
 			<Target title="lin_release">

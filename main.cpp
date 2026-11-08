@@ -6,7 +6,6 @@ using namespace sf;
 using namespace std;
 
 int main() {
-    cout << "SFML 2.4.2" << endl;
     cout << "Programa esta rodando em ";
     #if defined(_WIN32)
         cout << "Windows" << endl;
@@ -15,7 +14,7 @@ int main() {
     #endif
 
     // criando a tela
-    RenderWindow window(VideoMode(800, 600), "TELA SFML");
+    RenderWindow window(VideoMode(850, 600), "TELA SFML");
     // ==================
 
     // criando um circulo
