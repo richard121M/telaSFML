@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="telaSFML" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="win32debug">
+				<Option output="bin/Win32_Debug/telaSFML" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Win32_Debug" />
+				<Option object_output="obj/Win32_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="dependencias/windows32/sfml32win242/include" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-system-d" />
+					<Add directory="dependencias/windows32/sfml32win242/lib" />
+				</Linker>
+			</Target>
+			<Target title="linuxSFML261">
+				<Option output="bin/Lin_Debug/telaSFML" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Lin_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="dependencias/linux/SFML-2.6.1/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-Wl,-rpath,&apos;$ORIGIN/../../dependencias/linux/SFML-2.6.1/lib&apos;" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+					<Add directory="dependencias/linux/SFML-2.6.1/lib" />
+				</Linker>
+			</Target>
+			<Target title="lin_release">
+				<Option output="bin/Lin_Release/telaSFML" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Lin_Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="dependencias/linux/SFML-2.4.2/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-Wl,-rpath,&apos;$ORIGIN/dependencias/linux/SFML-2.4.2/lib&apos;" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+					<Add library="stb" />
+					<Add directory="dependencias/linux/SFML-2.4.2/lib" />
+				</Linker>
+			</Target>
+			<Target title="win64debug">
+				<Option output="bin/Win64_Debug/telaSFML" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="bin/Win64_Debug" />
+				<Option object_output="obj/Win64_Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="dependencias/windows64/sfml64win242/include" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-system-d" />
+					<Add directory="dependencias/windows64/sfml64win242/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+		</Compiler>
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

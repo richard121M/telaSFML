@@ -1,103 +1,80 @@
-#include <SDL3/SDL.h>
-#include <stdio.h>
-#include <stdbool.h>
-#include <string>
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <cmath>
 
-// Definições de tamanho da janela e do quadrado
-const float JANELA_LARGURA = 700.0f;
-const float JANELA_ALTURA = 300.0f;
-const float QUADRADO_TAMANHO = 200.0f;
+using namespace sf;
+using namespace std;
 
-int main(int argc, char* argv[]) {
-    // 1. Inicializa o subsistema de vídeo na SDL3
-    if (!SDL_Init(SDL_INIT_VIDEO)) {
-        SDL_Log("Erro ao inicializar SDL3: %s\n", SDL_GetError());
-        return 1;
-    }
+int main() {
+    cout << "Programa esta rodando em ";
+    #if defined(_WIN32)
+        cout << "Windows" << endl;
+    #elif defined(__linux__)
+        cout << "Linux" << endl;
+    #endif
 
-     // 2. Cria a janela e o renderizador ativando o V-Sync (SDL_PROP_RENDERER_CREATE_PRESENTVSYNC_NUMBER)
-    SDL_Window* janela = NULL;
-    SDL_Renderer* renderizador = NULL;
+    // criando a tela
+    RenderWindow window(VideoMode(850, 600), "TELA SFML");
+    // ==================
 
-    // Criamos uma estrutura de propriedades para o renderizador
-    SDL_PropertiesID props = SDL_CreateProperties();
-    SDL_SetStringProperty(props, SDL_PROP_RENDERER_CREATE_NAME_STRING, NULL);
-    SDL_SetNumberProperty(props, SDL_PROP_RENDERER_CREATE_PRESENT_VSYNC_NUMBER, 1);
+    // criando um circulo
+    CircleShape circulo(32); // declarando e definido o raio //
+    circulo.setFillColor(Color::Green); // definido a cor //
+    circulo.setPosition(0,0); // definindo a posicao //
+    // ==================
 
-    // Cria a janela normalmente
-    janela = SDL_CreateWindow("Quadrado Centralizado - SDL3", (int)JANELA_LARGURA, (int)JANELA_ALTURA, 0);
-    if (!janela) {
-        SDL_Log("Erro ao criar janela: %s\n", SDL_GetError());
-        SDL_Quit();
-        return 1;
-    }
+    // criando um quadrado
+    RectangleShape quadrado({64, 64}); // declarando o quadrado e definido o seu tamanho //
+    quadrado.setFillColor(Color::Blue); // definindo a cor //
+    quadrado.setPosition(64,0); // definido a posicao //
+    // ==================//
 
-    // Vincula o renderizador com V-Sync à janela
-    SDL_SetPointerProperty(props, SDL_PROP_RENDERER_CREATE_WINDOW_POINTER, janela);
-    renderizador = SDL_CreateRendererWithProperties(props);
-    SDL_DestroyProperties(props); // Limpa as propriedades da memória
+    // criando um quadrado
+    RectangleShape retangulo({128, 64}); // declarando o retangulo e definido o seu tamanho //
+    retangulo.setFillColor(Color::Magenta); // definindo a cor //
+    retangulo.setPosition(128,0); // definido a posicao //
+    // ==================
 
-    if (!renderizador) {
-        SDL_Log("Erro ao criar renderizador: %s\n", SDL_GetError());
-        SDL_DestroyWindow(janela);
-        SDL_Quit();
-        return 1;
-    }
+    // criando um quadrado
+    // nao existe no sfml uma funcao para criar um triangulo //
+    // porem e possivel crialo atraves do ConvexShape //
+    ConvexShape triangulo; // declarando o triangulo//
+    triangulo.setPointCount(3); // definindo o numero de pontos //
+    triangulo.setPoint(0, {32,0}); // a possicao do ponto 0 //
+    triangulo.setPoint(1, {0,64}); // a possicao do ponto 1 //
+    triangulo.setPoint(2, {64,64}); // a possicao do ponto 2 //
+    triangulo.setFillColor(Color::Red); // definindo a cor //
+    triangulo.setPosition(256,0); // definido a posicao do pivo do poligono //
+    // ==================
 
-    // 3. Define a posição e tamanho usando SDL_FRect (Ponto Flutuante / Alta Precisão)
-    SDL_FRect quadrado;
-    quadrado.w = QUADRADO_TAMANHO; // Largura
-    quadrado.h = QUADRADO_TAMANHO; // Altura
-    // Fórmulas para centralizar no meio da tela
-    quadrado.x = (JANELA_LARGURA / 2.0f) - (QUADRADO_TAMANHO / 2.0f);
-    quadrado.y = (JANELA_ALTURA / 2.0f) - (QUADRADO_TAMANHO / 2.0f);
+    // criando bola que gira //
+    float angulo = 0.0;
+    float velocidadeAngular = 0.05;
+    float moduloVetor = 4.0;
+    CircleShape circulog(32); // declarando e definido o raio //
+    circulog.setFillColor(Color::Yellow); // definido a cor //
+    circulog.setPosition(350,250); // definindo a posicao //
+    // ==================
 
-    // Loop principal
-    bool rodando = true;
-    SDL_Event evento;
+    // definindo o frames por segundo do programa //
+    window.setFramerateLimit(60);
+    while (window.isOpen()) {
 
-    // Variáveis para o cálculo correto de FPS
-    Uint64 frames = 0;
-    Uint64 lastTime = SDL_GetTicks(); // Inicializa com o tick atual (Uint64)
-
-    while (rodando) {
-        Uint64 currentTick = SDL_GetTicks();
-
-        while (SDL_PollEvent(&evento)) {
-            if (evento.type == SDL_EVENT_QUIT) {
-                rodando = false;
-            }
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed)
+                window.close();
         }
-
-        // Limpa a tela com fundo preto
-        SDL_SetRenderDrawColor(renderizador, 0, 0, 0, 255);
-        SDL_RenderClear(renderizador);
-
-        // Define a cor do quadrado (Vermelho)
-        SDL_SetRenderDrawColor(renderizador, 255, 0, 0, 255);
-
-        // Desenha o quadrado preenchido
-        SDL_RenderFillRect(renderizador, &quadrado);
-
-        // Atualiza a tela
-        SDL_RenderPresent(renderizador);
-        SDL_Delay(16);
-        // Incrementa o contador de frames a cada renderização
-        frames++;
-
-        // Verifica se já se passou 1 segundo (1000 milissegundos)
-        if (currentTick >= lastTime + 1000) {
-            std::string titulo = "Jogo - FPS: " + std::to_string(frames);
-            SDL_SetWindowTitle(janela, titulo.c_str());
-
-            frames = 0; // Reseta o contador para o próximo segundo
-            lastTime = currentTick; // Atualiza o marcador de tempo corretamente
-        }
+        window.clear();
+        window.draw(circulo); // desenhado o circulo na tela //
+        window.draw(quadrado); // desenhando o quadrado na tela //
+        window.draw(retangulo); // desenhando o retangulo na tela //
+        window.draw(triangulo); // desenhando o retangulo na tela //
+        window.draw(circulog); // desenhando o retangulo na tela //
+        angulo += velocidadeAngular;
+        circulog.move(cos(angulo)*moduloVetor,sin(angulo)*moduloVetor);
+        window.display();
     }
-
-    // 4. Limpeza e encerramento (SDL3 limpa automaticamente os renderizadores associados)
-    SDL_DestroyWindow(janela);
-    SDL_Quit();
 
     return 0;
 }
